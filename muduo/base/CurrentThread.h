@@ -13,15 +13,16 @@ namespace muduo
 namespace CurrentThread
 {
   // internal
-  extern __thread int t_cachedTid;
-  extern __thread char t_tidString[32];
+  // __thread修饰的变量是线程局部存储的
+  extern __thread int t_cachedTid; // 线程真实pid(tid)的缓存，为了减少使用系统调用gettid()函数
+  extern __thread char t_tidString[32];// tid的字符串表示形式
   extern __thread int t_tidStringLength;
   extern __thread const char* t_threadName;
   void cacheTid();
 
   inline int tid()
   {
-    if (__builtin_expect(t_cachedTid == 0, 0))
+    if (__builtin_expect(t_cachedTid == 0, 0))// 如果没缓存过tid
     {
       cacheTid();
     }
