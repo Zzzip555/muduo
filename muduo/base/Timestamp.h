@@ -42,7 +42,7 @@ class Timestamp : public muduo::copyable,
   {
   }
 
-  void swap(Timestamp& that)
+  void swap(Timestamp& that)//注意是形参
   {
     std::swap(microSecondsSinceEpoch_, that.microSecondsSinceEpoch_);
   }
@@ -103,8 +103,8 @@ inline bool operator==(Timestamp lhs, Timestamp rhs)
 /// resolution for next 100 years.
 inline double timeDifference(Timestamp high, Timestamp low)
 {
-  int64_t diff = high.microSecondsSinceEpoch() - low.microSecondsSinceEpoch();
-  return static_cast<double>(diff) / Timestamp::kMicroSecondsPerSecond;
+  int64_t diff = high.microSecondsSinceEpoch() - low.microSecondsSinceEpoch();//microSecondsSinceEpoch是微妙级
+  return static_cast<double>(diff) / Timestamp::kMicroSecondsPerSecond;//返回秒值
 }
 
 ///
